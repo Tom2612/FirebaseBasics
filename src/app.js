@@ -29,26 +29,24 @@ passwordInput.addEventListener('input', (e) => {
 })
 
 const submitBtn = document.querySelector('#submit');
-submitBtn.addEventListener('click', createUserWithEmailAndPassword)
-
-
-createUserWithEmailAndPassword(auth, email=document.querySelector('#email').value, password=document.querySelector('#password').value)
-.then((usercredential) => {
-    const user = usercredential.user;
-    console.log(user)
-})
-.catch(error => {
-    const errCode = error.code;
-    const errMessage = error.message
+submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email=document.querySelector('#email').value, password=document.querySelector('#password').value)
+    .then((usercredential) => {
+        const user = usercredential.user;
+        console.log(user)
+    })
+    .catch(error => {
+        const errCode = error.code;
+        const errMessage = error.message
     console.log(errCode, errMessage)
+    })
 })
 
-console.log(document.querySelector('#email'))
-
-// onAuthStateChanged(auth, user => {
-//     if (user !== null) {
-//         console.log('Logged in!')
-//     } else {
-//         console.log('Not logged in!')
-//     }
-// })
+onAuthStateChanged(auth, user => {
+    if (user !== null) {
+        console.log('Logged in!')
+    } else {
+        console.log('Not logged in!')
+    }
+})
