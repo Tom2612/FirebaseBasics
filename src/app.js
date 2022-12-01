@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js'; 
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js'; 
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js'; 
 
 const firebaseConfig = {
@@ -21,6 +21,7 @@ let email, password;
 
 const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
+const signOutBtn = document.querySelector('#sign-out')
 emailInput.addEventListener('input', (e) => {
     email = e.target.value
 })
@@ -45,8 +46,19 @@ submitBtn.addEventListener('click', (e) => {
 
 onAuthStateChanged(auth, user => {
     if (user !== null) {
+        // console.log(user)
         console.log('Logged in!')
     } else {
         console.log('Not logged in!')
     }
 })
+
+signOutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+        console.log('signed out!')
+    }).catch((error) =>{
+        console.log('Could not sign you out', error)
+    })
+})
+
+console.log(auth.currentUser)
