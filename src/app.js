@@ -17,8 +17,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let email, password;
-
 const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const signOutBtn = document.querySelector('#sign-out')
