@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js'; 
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js'; 
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js'; 
 
 const firebaseConfig = {
@@ -47,7 +47,7 @@ submitBtn.addEventListener('click', (e) => {
 onAuthStateChanged(auth, user => {
     if (user !== null) {
         // console.log(user)
-        console.log('Logged in!')
+        console.log('Logged in!', user.email);
     } else {
         console.log('Not logged in!')
     }
@@ -55,10 +55,20 @@ onAuthStateChanged(auth, user => {
 
 signOutBtn.addEventListener('click', () => {
     signOut(auth).then(() => {
-        console.log('signed out!')
+        console.log('signed out!');
     }).catch((error) =>{
-        console.log('Could not sign you out', error)
+        console.log('Could not sign you out', error);
     })
 })
 
-console.log(auth.currentUser)
+const signInBtn = document.querySelector('#sign-submit');
+signInBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email=document.querySelector('#email').value, password=document.querySelector('#password').value)
+    .then(user => {
+        console.log('Signed in', user.email);
+    })
+    .catch((error) => {
+        console.log('Failed to sign in', error.message);
+    })
+})
